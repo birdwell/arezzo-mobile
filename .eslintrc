@@ -1,0 +1,11 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "react/jsx-filename-extension": "off",
+        "no-tabs": 0,
+        "indent": "off",
+        "react/prop-types": 0,
+        "react/jsx-indent": [4, "tab"],
+        "react/jsx-indent-props": [4, "tab"]  
+    }
+}

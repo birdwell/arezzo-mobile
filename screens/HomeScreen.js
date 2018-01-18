@@ -11,6 +11,40 @@ import {
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import HomeIcon from '../components/HomeIcon';
+
+const HomeGrid = [
+  {
+    label: 'Sights',
+    path: 'Sights',
+    icon: ''
+  },
+  {
+    label: 'Events',
+    path: 'Events',
+    icon: ''
+  },
+  {
+    label: 'Outdoors',
+    path: 'Outdoors',
+    icon: ''
+  },
+  {
+    label: 'Food',
+    path: 'Food',
+    icon: ''
+  },
+  {
+    label: 'Shopping',
+    path: 'Shopping',
+    icon: ''
+  },
+  {
+    label: 'More',
+    path: 'More',
+    icon: ''
+  }
+];
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -21,32 +55,20 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
+          <View style={styles.homeGrid}>
+            {
+              HomeGrid.map(item => (
+                <HomeIcon 
+                  key={item.path} 
+                  label={item.label} 
+                  path={item.path} 
+                  icon={item.icon} 
+                  navigation={this.props.navigation}
+                  />
+              ))
+            }
           </View>
         </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
@@ -66,6 +88,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  homeGrid: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   developmentModeText: {
     marginBottom: 20,

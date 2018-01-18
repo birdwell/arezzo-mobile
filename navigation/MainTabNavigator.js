@@ -5,17 +5,22 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ItineraryScreen from '../screens/ItineraryScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import MainStackNavigator from './MainStackNavigator';
 
 export default TabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: MainStackNavigator,
+      navigationOptions: { header: null }
     },
-    Links: {
-      screen: LinksScreen,
+    Itinerary: {
+      screen: ItineraryScreen
+    },
+    Favorites: {
+      screen: FavoritesScreen
     },
     Settings: {
       screen: SettingsScreen,
@@ -30,8 +35,20 @@ export default TabNavigator(
           case 'Home':
             iconName =
               Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
+                ? `ios-home${focused ? '' : '-outline'}`
                 : 'md-information-circle';
+            break;
+          case 'Itinerary':
+            iconName =
+              Platform.OS === 'ios'
+              ? `ios-calendar${focused ? '' : '-outline'}`
+              : 'md-calendar';
+            break;
+          case 'Favorites':
+            iconName =
+              Platform.OS === 'ios'
+              ? `ios-heart${focused ? '' : '-outline'}`
+              : 'md-heart';
             break;
           case 'Links':
             iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link';
