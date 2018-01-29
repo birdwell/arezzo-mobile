@@ -5,6 +5,8 @@ import OutdoorsScreen from '../screens/homescreens/Outdoors';
 import FoodScreen from '../screens/homescreens/FoodScreen';
 import ShoppingScreen from '../screens/homescreens/ShoppingScreen';
 import MoreScreen from '../screens/homescreens/MoreScreen';
+import EventDetails from '../screens/homescreens/details/EventDetails';
+import EventScreen from '../screens/homescreens/EventsScreen';
 
 const MainStackNavigator = StackNavigator({
 	Home: {
@@ -24,6 +26,12 @@ const MainStackNavigator = StackNavigator({
 	},
 	More: {
 		screen: MoreScreen
+	},
+	Events:{
+		screen: EventScreen
+	},
+	EventDetails: {
+		screen: EventDetails
 	}
 });
 

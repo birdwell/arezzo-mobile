@@ -1,11 +1,29 @@
 {
-    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true
+    },
+    "plugins": [
+      "react",
+      "react-native"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "globals": {
+      "describe": false,
+      "it": false,
+      "expect": false,
+      "beforeEach": false,
+      "before": false,
+      "afterEach": false,
+      "after": false,
+      "jest": false
+    },
     "rules": {
-        "react/jsx-filename-extension": "off",
-        "no-tabs": 0,
-        "indent": "off",
-        "react/prop-types": 0,
-        "react/jsx-indent": [4, "tab"],
-        "react/jsx-indent-props": [4, "tab"]  
+      "quotes": ["error", "single", { "allowTemplateLiterals": true } ],
+      "semi": ["error", "always"]
     }
-}
+  }
+  

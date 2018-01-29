@@ -17,32 +17,27 @@ const HomeGrid = [
   {
     label: 'Sights',
     path: 'Sights',
-    icon: ''
+    icon: require('../assets/images/sights.png')
   },
   {
     label: 'Events',
-    path: 'Events',
-    icon: ''
+    path: 'Events'
   },
   {
     label: 'Outdoors',
-    path: 'Outdoors',
-    icon: ''
+    path: 'Outdoors'
   },
   {
     label: 'Food',
-    path: 'Food',
-    icon: ''
+    path: 'Food'
   },
   {
     label: 'Shopping',
-    path: 'Shopping',
-    icon: ''
+    path: 'Shopping'
   },
   {
     label: 'More',
-    path: 'More',
-    icon: ''
+    path: 'More'
   }
 ];
 
