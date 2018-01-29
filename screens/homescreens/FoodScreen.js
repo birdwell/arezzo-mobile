@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import Discovery from '../../components/discovery/View';
 
 
@@ -10,10 +10,10 @@ export default class FoodScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Text>Food</Text>
+      <View style={styles.container}>
         <Discovery />
-      </ScrollView>
+      </View>
+
     );
   }
 }

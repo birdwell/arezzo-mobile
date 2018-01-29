@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 
 class Map extends Component {
 	render() {
 		return (
 			<MapView
-				style={{ flex: 1 }}
+				style={styles.map}
 				initialRegion={{
 				latitude: 37.78825,
 				longitude: -122.4324,
@@ -17,5 +17,12 @@ class Map extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	map: {
+		...StyleSheet.absoluteFillObject,
+		flex: 1
+	},
+  });
 
 export default Map;
