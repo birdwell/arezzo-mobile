@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
-import Discovery from '../../components/discovery';
+import Discovery from '../../components/discovery/View';
+
 
 export default class FoodScreen extends React.Component {
   static navigationOptions = {
