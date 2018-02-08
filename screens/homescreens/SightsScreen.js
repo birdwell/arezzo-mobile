@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
+import Map from '../../components/discovery/map/Map';
 
 export default class SightsScreen extends React.Component {
   static navigationOptions = {
@@ -11,6 +12,7 @@ export default class SightsScreen extends React.Component {
       <ScrollView style={styles.container}>
         <Text>Sights</Text>
       </ScrollView>
+
     );
   }
 }

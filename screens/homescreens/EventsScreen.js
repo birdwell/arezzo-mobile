@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import EventItem from '../../components/list-items/EventItem';
+import View from '../../components/discovery/View';
+import Discovery from '../../components/discovery/View';
 
 const TestEvent = { title: 'Test Event' };
 
@@ -16,10 +18,12 @@ export default class EventsScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Text>Events</Text>
-        <EventItem event={TestEvent} onPress={() => this.props.navigation.navigate('EventDetails', { ...TestEvent })} />
-      </ScrollView>
+      // <ScrollView style={styles.container}>
+      //   <EventItem event={TestEvent} onPress={() => this.props.navigation.navigate('EventDetails', { ...TestEvent })} />
+      // </ScrollView>
+      <View>
+        <Discovery />
+      </View>
     );
   }
 }
