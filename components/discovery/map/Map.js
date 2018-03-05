@@ -4,6 +4,12 @@ import { StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 import Marker from './Marker';
 
+/*
+	1. have state for selected marker
+	2. display a small view on the bottom of the map if there is a selected marker
+	3. make sure to pass onclick to the map marker cmp and wire it up
+*/
+
 class Map extends Component {
 	static propTypes = {
 		items: PropTypes.arrayOf({
