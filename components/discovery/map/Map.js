@@ -16,27 +16,11 @@ class Map extends Component {
 		})  
 	}
 
-	state = {
-		region: {
-			// OU campus
-			latitude: 35.208611,
-			longitude: -97.445833,
-			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421,
-		}
-	}
-
-	onRegionChange = (region) => {
-		this.setState({ region });
-	}
-
 	render() {
 		const { items } = this.props;
 		return (
 			<MapView
 				style={styles.map}
-				region={this.state.region}
-				onRegionChange={this.onRegionChange}
 				initialRegion={{
 					latitude: 35.208611,
 					longitude: -97.445833,
