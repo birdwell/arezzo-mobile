@@ -19,7 +19,8 @@
       "before": false,
       "afterEach": false,
       "after": false,
-      "jest": false
+      "jest": false,
+      "Promise": false
     },
     "rules": {
       "quotes": ["error", "single", { "allowTemplateLiterals": true } ],
