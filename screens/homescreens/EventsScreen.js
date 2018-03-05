@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { getEvents } from '../../api';
-import EventItem from '../../components/list-items/EventItem';
-import View from '../../components/discovery/View';
+
 import Discovery from '../../components/discovery/View';
 
 export default class EventsScreen extends React.Component {
@@ -32,7 +31,7 @@ export default class EventsScreen extends React.Component {
     const { events } = this.state;
     return (
       <View style={styles.container} >
-        <Discovery itemss={events} />
+        <Discovery items={events} />
       </View>
     );
   }

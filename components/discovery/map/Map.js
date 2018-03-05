@@ -32,7 +32,6 @@ class Map extends Component {
 
 	render() {
 		const { items } = this.props;
-		debugger;
 		return (
 			<MapView
 				style={styles.map}

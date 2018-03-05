@@ -6,10 +6,6 @@ class Discovery extends Component {
 	static propTypes = {
 		items: PropTypes.array
 	}
-	
-	static defaultProps = {
-		items: []
-	}
 
 	render() {
 		const { items } = this.props;
@@ -18,5 +14,9 @@ class Discovery extends Component {
 		);
 	}
 }
+
+Discovery.defaultProps = {
+	items: []
+};
 
 export default Discovery;
