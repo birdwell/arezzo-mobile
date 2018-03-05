@@ -1,53 +1,55 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet } from 'react-native';
 import { MapView } from 'expo';
-import { Marker } from 'react-native-maps';
+import Marker from './Marker';
 
-class Map extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-
-		};
+class Map extends Component {
+	static propTypes = {
+		items: PropTypes.arrayOf({
+			item: PropTypes.shape({
+				latitude: PropTypes.number.isRequired,
+				longitude: PropTypes.number.isRequired,
+				title: PropTypes.string.isRequired,
+				description: PropTypes.string.isRequired
+			})
+		})  
 	}
 
-	getInitialState() {
-		return {
-			region: {
-				// OU campus
-				latitude: 35.208611,
-				longitude: -97.445833,
-				latitudeDelta: 0.0922,
-				longitudeDelta: 0.0421,
-			}
-		};
+	state = {
+		region: {
+			// OU campus
+			latitude: 35.208611,
+			longitude: -97.445833,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421,
+		}
 	}
 
-	onRegionChange(region) {
+	onRegionChange = (region) => {
 		this.setState({ region });
 	}
 
 	render() {
+		const { items } = this.props;
+		debugger;
 		return (
 			<MapView
 				style={styles.map}
 				region={this.state.region}
+				onRegionChange={this.onRegionChange}
 				initialRegion={{
-				latitude: 35.208611,
-				longitude: -97.445833,
-				latitudeDelta: 0.0922,
-				longitudeDelta: 0.0421,
+					latitude: 35.208611,
+					longitude: -97.445833,
+					latitudeDelta: 0.0922,
+					longitudeDelta: 0.0421,
 				}}
 			>
-			<MapView.Marker
-				coordinate={{
-					latitude: 35.21075,
-					longitude: -97.4418,
-				}}
-				title={"Arezzo Demo"}
-				description={"2/8/18 @ 10:30 AM"}
-			/>
+			{
+				items.length > 0 && (
+					items.map(item => <Marker key={item.title} item={item} />)
+				)
+			}
 			</MapView>
 		);
 	}
