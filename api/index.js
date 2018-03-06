@@ -8,3 +8,4 @@ export const API_BASE = __DEV__ ? Platform.select({
 
 export { getEvents } from './events-api';
 export { getSights } from './events-api';
+export { getFood } from './food-api';
