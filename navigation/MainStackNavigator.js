@@ -7,6 +7,7 @@ import ShoppingScreen from '../screens/homescreens/ShoppingScreen';
 import MoreScreen from '../screens/homescreens/MoreScreen';
 import EventDetails from '../screens/homescreens/details/EventDetails';
 import EventScreen from '../screens/homescreens/EventsScreen';
+import FoodDetails from '../screens/homescreens/details/FoodDetails';
 
 const MainStackNavigator = StackNavigator({
 	Home: {
@@ -32,6 +33,9 @@ const MainStackNavigator = StackNavigator({
 	},
 	EventDetails: {
 		screen: EventDetails
+	},
+	FoodDetails: {
+		screen: FoodDetails
 	}
 });
 
