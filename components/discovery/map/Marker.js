@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MapView } from 'expo';
 
-const Marker = ({ item }) => {
+const Marker = ({ item, onPress }) => {
 	return (
 		<MapView.Marker
 			coordinate={{
@@ -11,6 +11,7 @@ const Marker = ({ item }) => {
 			}}
 			title={item.title || ''}
 			description={item.description || ''}
+			onPress={() => onPress(item)}
 		/>
 	);
 };
