@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { MapView } from 'expo';
 import Marker from './Marker';
 
@@ -22,8 +22,32 @@ class Map extends Component {
 		})  
 	}
 
+	state = {
+		selectedMarker: null
+	}
+
+	onMarkerPress = (item) => {
+		this.setState({ 
+			region: {
+				latitude: item.latitude,
+				longitude: item.longitude,
+				latitudeDelta: 0.0922,
+				longitudeDelta: 0.0421,
+			},
+			selectedMarker: item
+		}, () => {
+			this.map.animateToRegion({
+				...item,
+				latitudeDelta: this.state.region.latitudeDelta,
+				longitudeDelta: this.state.region.longitudeDelta,
+			}, 350);
+		});
+	}
+
 	render() {
 		const { items } = this.props;
+		const { selectedMarker } = this.state;
+
 		return (
 			<MapView
 				style={styles.map}
@@ -33,12 +57,17 @@ class Map extends Component {
 					latitudeDelta: 0.0922,
 					longitudeDelta: 0.0421,
 				}}
-			>
+				ref={x => this.map = x}
+				>
 			{
 				items.length > 0 && (
-					items.map(item => <Marker key={item.title} item={item} />)
+					items.map(item => <Marker key={item._id} item={item} 
+						onPress = {this.onMarkerPress} />)
 				)
 			}
+			{ selectedMarker && (
+				<Text>{ selectedMarker.title }</Text>
+			)}
 			</MapView>
 		);
 	}
