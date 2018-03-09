@@ -12,18 +12,43 @@ import Marker from './Marker';
 
 class Map extends Component {
 	static propTypes = {
-		items: PropTypes.arrayOf({
-			item: PropTypes.shape({
-				latitude: PropTypes.number.isRequired,
-				longitude: PropTypes.number.isRequired,
+		items: PropTypes.arrayOf(
+			PropTypes.shape({
 				title: PropTypes.string.isRequired,
 				description: PropTypes.string.isRequired
 			})
-		})  
+		)  
+	}
+
+	componentWillMount() {
+		if (this.props.items) {
+			this.setupItems(this.props.items);
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.items) {
+			this.setupItems(nextProps.items);
+		}
+	}
+
+	setupItems (newItems) {
+		const items = newItems.map(x => {
+			if (!x.location || !x.location.geo) { return x; }
+			return { ...x, longitude: x.location.geo[0], latitude: x.location.geo[1] };
+		});
+		this.setState({ items });
 	}
 
 	state = {
-		selectedMarker: null
+		selectedMarker: null,
+		region: {
+			latitude: 35.208611,
+			longitude: -97.445833,
+			latitudeDelta: 0.0922,
+			longitudeDelta: 0.0421,
+		},
+		items: []
 	}
 
 	onMarkerPress = (item) => {
@@ -45,24 +70,23 @@ class Map extends Component {
 	}
 
 	render() {
-		const { items } = this.props;
-		const { selectedMarker } = this.state;
+		const { selectedMarker, region, items } = this.state;
 
 		return (
 			<MapView
 				style={styles.map}
-				initialRegion={{
-					latitude: 35.208611,
-					longitude: -97.445833,
-					latitudeDelta: 0.0922,
-					longitudeDelta: 0.0421,
-				}}
+				initialRegion={region}
 				ref={x => this.map = x}
 				>
 			{
 				items.length > 0 && (
-					items.map(item => <Marker key={item._id} item={item} 
-						onPress = {this.onMarkerPress} />)
+					items.map(item => {
+						if (item.longitude && item.latitude) {
+							return (
+								<Marker key={item._id} item={item} onPress={this.onMarkerPress} />
+							);
+						}
+					})
 				)
 			}
 			{ selectedMarker && (
@@ -75,7 +99,6 @@ class Map extends Component {
 
 const styles = StyleSheet.create({
 	map: {
-		...StyleSheet.absoluteFillObject,
 		flex: 1
 	},
 });

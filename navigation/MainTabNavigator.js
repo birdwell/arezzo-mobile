@@ -60,13 +60,16 @@ export default TabNavigator(
         return (
           <Ionicons
             name={iconName}
-            size={28}
+            size={30}
             style={{ marginBottom: -3 }}
             color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
           />
         );
       },
     }),
+    tabBarOptions: {
+      showLabel: false,
+    },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,

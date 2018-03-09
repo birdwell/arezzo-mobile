@@ -1,43 +1,61 @@
 import React from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
-import { WebBrowser } from 'expo';
-
-import { MonoText } from '../components/StyledText';
-import HomeIcon from '../components/HomeIcon';
+import {
+  MaterialCommunityIcons,
+  FontAwesome,
+  MaterialIcons
+} from '@expo/vector-icons'; 
+import PropTypes from 'prop-types';
+import HomeIcon from './components/HomeIcon';
+import { getItems } from '../api';
+import Arezzo from '../assets/images/arezzo.png';
 
 const HomeGrid = [
   {
     label: 'Sights',
     path: 'Sights',
-    icon: require('../assets/images/sights.png')
+    iconElement: <FontAwesome name="camera-retro" size={40} />,
+    detailPath: 'SightDetails',
+    getItems: () => getItems('sight')
   },
   {
     label: 'Events',
-    path: 'Events'
+    path: 'Events',
+    iconElement: <FontAwesome name="ticket" size={40} />,
+    detailPath: 'EventDetails',
+    getItems: () => getItems('event')
   },
   {
     label: 'Outdoors',
-    path: 'Outdoors'
+    path: 'Outdoors',
+    iconElement: <MaterialCommunityIcons name="bike" size={40} />,
+    detailPath: 'OutdoorDetails',
+    getItems: () => getItems('outdoor')
   },
   {
     label: 'Food',
-    path: 'Food'
+    path: 'Food',
+    iconElement: <MaterialCommunityIcons name="food" size={40} />,
+    detailPath: 'FoodDetails',
+    getItems: () => getItems('food')
   },
   {
     label: 'Shopping',
-    path: 'Shopping'
+    path: 'Shopping',
+    iconElement: <FontAwesome name="shopping-cart" size={40} />,
+    detailPath: 'ShoppingDetails',
+    getItems: () => getItems('shopping')
   },
   {
     label: 'More',
-    path: 'More'
+    path: 'More',
+    iconElement: <MaterialIcons name="more-horiz" size={40} />,
   }
 ];
 
@@ -46,37 +64,30 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired
+    }),
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.homeGrid}>
-            {
-              HomeGrid.map(item => (
-                <HomeIcon 
-                  key={item.path} 
-                  label={item.label} 
-                  path={item.path} 
-                  icon={item.icon} 
-                  navigation={this.props.navigation}
-                  />
-              ))
-            }
-          </View>
-        </ScrollView>
+        <Image style={{ flex: 1, height: undefined, width: undefined, marginTop: 10 }} resizeMode="contain" source={Arezzo} /> 
+        <View style={styles.homeGrid}>
+          {
+            HomeGrid.map(item => (
+              <HomeIcon 
+                key={item.path} 
+                {...item}
+                navigation={this.props.navigation}
+                />
+            ))
+          }
+        </View>
       </View>
     );
   }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
 const styles = StyleSheet.create({
@@ -85,91 +96,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   homeGrid: {
-    flex: 1,
+    flex: 2,
+    marginTop: 5,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
   },
 });

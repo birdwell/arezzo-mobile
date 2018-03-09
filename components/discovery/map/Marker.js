@@ -21,8 +21,9 @@ Marker.propTypes = {
 		latitude: PropTypes.number.isRequired,
 		longitude: PropTypes.number.isRequired,
 		title: PropTypes.string.isRequired,
-		description: PropTypes.string.isRequired
-	})
+		description: PropTypes.string
+	}),
+	onPress: PropTypes.func.isRequired
 };
 
 export default Marker;

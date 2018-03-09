@@ -1,11 +1,22 @@
 
 import { Platform } from 'react-native';
+import { ip_address } from './config';
 
 export const API_BASE = __DEV__ ? Platform.select({
-	ios: 'https://127.0.0.1:5000',
-	android: 'https://127.0.0.1:5000'
-}) : 'https://arezzo-server.herokuapp.com';
+	ios: `http://${ip_address}:3000/api`,
+	android: `https://${ip_address}:3000/api`
+}) : 'https://arezzo-cms.herokuapp.com/api';
 
-export { getEvents } from './events-api';
-export { getSights } from './events-api';
-export { getFood } from './food-api';
+export const getItems = async (path) => {
+	try {
+
+		let response = await fetch(
+			`${API_BASE}/${path}`
+		);
+		let { items } = await response.json();
+		return items;
+	} catch (e) {
+		return e;
+	}
+};
+
