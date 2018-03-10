@@ -11,9 +11,9 @@ const nodeModulePath = path.join(rootPath, 'node_modules');
 const reactNativeModulePath = path.join(nodeModulePath, 'react-native');
 const stats = fs.lstatSync(reactNativeModulePath);
 if (stats.isSymbolicLink()) {
-  metroBundlerRequirePath = 'react-native/node_modules/metro-bundler';
+  metroBundlerRequirePath = 'react-native/node_modules/metro';
 } else {
-  metroBundlerRequirePath = 'metro-bundler';
+  metroBundlerRequirePath = 'metro';
 }
 
 const blacklist = require(metroBundlerRequirePath + '/src/blacklist');

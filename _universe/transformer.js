@@ -42,7 +42,7 @@ const inlineRequiresPlugin = require(moduleBasePath + 'babel-preset-fbjs/plugins
 const makeHMRConfig = require(moduleBasePath + 'babel-preset-react-native/configs/hmr');
 const resolvePlugins = require(moduleBasePath + 'babel-preset-react-native/lib/resolvePlugins');
 
-const { compactMapping } = require(moduleBasePath + 'metro-bundler/src/Bundler/source-map');
+const { compactMapping } = require(moduleBasePath + 'metro/src/Bundler/source-map');
 
 const cacheKeyParts = [
   fs.readFileSync(__filename),
