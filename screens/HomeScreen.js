@@ -19,35 +19,35 @@ import Arezzo from '../assets/images/arezzo.png';
 const HomeGrid = [
   {
     label: 'Sights',
-    path: 'Sights',
+    path: 'Place',
     iconElement: <FontAwesome name="camera-retro" size={40} />,
     detailPath: 'SightDetails',
     getItems: () => getItems('sight')
   },
   {
     label: 'Events',
-    path: 'Events',
+    path: 'Place',
     iconElement: <FontAwesome name="ticket" size={40} />,
     detailPath: 'EventDetails',
     getItems: () => getItems('event')
   },
   {
     label: 'Outdoors',
-    path: 'Outdoors',
+    path: 'Place',
     iconElement: <MaterialCommunityIcons name="bike" size={40} />,
     detailPath: 'OutdoorDetails',
     getItems: () => getItems('outdoors')
   },
   {
     label: 'Food',
-    path: 'Food',
+    path: 'Place',
     iconElement: <MaterialCommunityIcons name="food" size={40} />,
     detailPath: 'FoodDetails',
     getItems: () => getItems('food')
   },
   {
     label: 'Shopping',
-    path: 'Shopping',
+    path: 'Place',
     iconElement: <FontAwesome name="shopping-cart" size={40} />,
     detailPath: 'ShoppingDetails',
     getItems: () => getItems('shopping')
@@ -78,7 +78,7 @@ export default class HomeScreen extends React.Component {
           {
             HomeGrid.map(item => (
               <HomeIcon
-                key={item.path}
+                key={item.label}
                 {...item}
                 navigation={this.props.navigation}
                 />
