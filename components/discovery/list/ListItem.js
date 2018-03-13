@@ -4,8 +4,8 @@ import { Image, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
 
-const EventItem = ({ onPress, item }) => {
-	const imageURL = item.images.length > 0 ? item.images[0].secure_url : null;
+const ListItem = ({ onPress, item }) => {
+	const imageURL = item.images && item.images.length > 0 ? item.images[0].secure_url : null;
 	return (
 		<ListItem
 			avatar={imageURL && <Image style={{ width: 50, height: 50 }} source={{ uri: imageURL }} />}
