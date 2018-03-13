@@ -10,7 +10,7 @@ import {
   MaterialCommunityIcons,
   FontAwesome,
   MaterialIcons
-} from '@expo/vector-icons'; 
+} from '@expo/vector-icons';
 import PropTypes from 'prop-types';
 import HomeIcon from './components/HomeIcon';
 import { getItems } from '../api';
@@ -36,7 +36,7 @@ const HomeGrid = [
     path: 'Outdoors',
     iconElement: <MaterialCommunityIcons name="bike" size={40} />,
     detailPath: 'OutdoorDetails',
-    getItems: () => getItems('outdoor')
+    getItems: () => getItems('outdoors')
   },
   {
     label: 'Food',
@@ -73,12 +73,12 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={{ flex: 1, height: undefined, width: undefined, marginTop: 10 }} resizeMode="contain" source={Arezzo} /> 
+        <Image style={{ flex: 1, height: undefined, width: undefined, marginTop: 10 }} resizeMode="contain" source={Arezzo} />
         <View style={styles.homeGrid}>
           {
             HomeGrid.map(item => (
-              <HomeIcon 
-                key={item.path} 
+              <HomeIcon
+                key={item.path}
                 {...item}
                 navigation={this.props.navigation}
                 />

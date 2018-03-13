@@ -16,6 +16,10 @@ class List extends Component {
 		path: PropTypes.string.isRequired
 	}
 
+	static defaultProps = {
+		items: []
+	}
+
 	async componentDidMount() {
 		await Font.loadAsync({
 			...MaterialIcons.font
@@ -30,21 +34,32 @@ class List extends Component {
 		);
 	}
 
+	renderError() {
+		return (
+			<View style={styles.emptyContainer}>
+				<Text h5 style={styles.emptyText}>Unable to load items.</Text>
+			</View>
+		);
+	}
 
 	render() {
 		const { items, path, navigation: { navigate } } = this.props;
 
-		if (items.length === 0) {
+		if (!items || items.length === 0) {
 			return this.renderEmpty();
+		}
+
+		if (items && items.message) {
+			return this.renderError();
 		}
 
 		return (
 			<NativeList containerStyle={{ marginTop: 0 }}>
-				{items.map(item => (
-					<ListItem 
+				{items && items.map(item => (
+					<ListItem
 						item={item}
 						key={item._id}
-						onPress={() => navigate(path, { item })} 
+						onPress={() => navigate(path, { item })}
 					/>
 				))}
 			</NativeList>

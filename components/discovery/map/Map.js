@@ -17,7 +17,11 @@ class Map extends Component {
 				title: PropTypes.string.isRequired,
 				description: PropTypes.string.isRequired
 			})
-		)  
+		)
+	}
+
+	static defaultProps = {
+		items: []
 	}
 
 	componentWillMount() {
@@ -52,7 +56,7 @@ class Map extends Component {
 	}
 
 	onMarkerPress = (item) => {
-		this.setState({ 
+		this.setState({
 			region: {
 				latitude: item.latitude,
 				longitude: item.longitude,
