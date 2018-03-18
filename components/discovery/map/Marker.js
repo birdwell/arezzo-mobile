@@ -10,7 +10,7 @@ const Marker = ({ item, onPress }) => {
 				longitude: item.longitude,
 			}}
 			title={item.title || ''}
-			description={item.description || ''}
+			//description={item.description || ''}
 			onPress={() => onPress(item)}
 		/>
 	);

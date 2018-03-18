@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MapView } from 'expo';
 import Marker from './Marker';
 
@@ -77,34 +77,53 @@ class Map extends Component {
 		const { selectedMarker, region, items } = this.state;
 
 		return (
-			<MapView
-				style={styles.map}
-				initialRegion={region}
-				ref={x => this.map = x}
-				>
-			{
-				items.length > 0 && (
-					items.map(item => {
-						if (item.longitude && item.latitude) {
-							return (
-								<Marker key={item._id} item={item} onPress={this.onMarkerPress} />
-							);
-						}
-					})
-				)
-			}
-			{ selectedMarker && (
-				<Text>{ selectedMarker.title }</Text>
-			)}
-			</MapView>
+			<View style={styles.container}>
+				<MapView
+					style={styles.map}
+					initialRegion={region}
+					ref={x => this.map = x}
+					>
+				{
+					items.length > 0 && (
+						items.map(item => {
+							if (item.longitude && item.latitude) {
+								return (
+									<Marker key={item._id} item={item} onPress={this.onMarkerPress} />
+								);
+							}
+						})
+					)
+				}
+
+				</MapView>
+				<View style={styles.infoPane}>
+					{ selectedMarker && (
+						<Text>{ selectedMarker.title }</Text>
+					)}
+					{ selectedMarker && (
+						<Text>{ selectedMarker.description }</Text>
+					)}
+				</View>
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	map: {
-		flex: 1
+	container: {
+		...StyleSheet.absoluteFillObject,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
 	},
+	map: {
+		...StyleSheet.absoluteFillObject,
+	},
+	infoPane: {
+		backgroundColor: 'rgba(255,255,255,0.9)',
+		paddingHorizontal: 18,
+    	paddingVertical: 12,
+    	borderRadius: 20,
+	}
 });
 
 export default Map;
