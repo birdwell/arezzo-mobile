@@ -17,15 +17,14 @@ class PlaceScreen extends React.Component {
 		items: []
 	}
 
-	componentWillMount() {
-		const getItems = getProp('getItems', this.props);
-		getItems()
-			.then(items => {
-				this.setState({ items });
-			})
-			.catch(() => {
-				this.setState({ error: 'Unable to get events.' });
-			});
+	async componentWillMount() {
+		try {
+			const getItems = getProp('getItems', this.props);
+			const items = await getItems();
+			this.setState({ items });
+		} catch (error) {
+			this.setState({ error: 'Unable to get items.' });
+		}
 	}
 
 	render() {
