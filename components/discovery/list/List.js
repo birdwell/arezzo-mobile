@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
 import { Font } from 'expo';
 import { withNavigation } from 'react-navigation';
 import { List as NativeList, Text } from 'react-native-elements';
@@ -13,11 +13,27 @@ class List extends Component {
 		navigation: PropTypes.shape({
 			navigate: PropTypes.func.isRequired,
 		}),
-		path: PropTypes.string.isRequired
+		path: PropTypes.string,
+		favoriteAll: PropTypes.bool
 	}
 
 	static defaultProps = {
+		favoriteAll: false,
 		items: []
+	}
+
+	state = {
+		favorited: []
+	}
+
+	async componentWillMount() {
+		const favorited = await AsyncStorage.getItem('@Favorites');
+		if (favorited) {
+			this.setState({
+				favorited: JSON.parse(favorited)
+			});
+		}
+
 	}
 
 	async componentDidMount() {
@@ -27,7 +43,7 @@ class List extends Component {
 	}
 
 	renderEmpty() {
-		return(
+		return (
 			<View style={styles.emptyContainer}>
 				<Text h5 style={styles.emptyText}>Empty</Text>
 			</View>
@@ -43,8 +59,8 @@ class List extends Component {
 	}
 
 	render() {
-		const { items, path, navigation: { navigate } } = this.props;
-
+		const { items, path, navigation: { navigate }, favoriteAll } = this.props;
+		const { favorited } = this.state;
 		if (!items || items.length === 0) {
 			return this.renderEmpty();
 		}
@@ -55,11 +71,12 @@ class List extends Component {
 
 		return (
 			<NativeList containerStyle={{ marginTop: 0 }}>
-				{items && items.map(item => (
+				{items.map(item => (
 					<ListItem
 						item={item}
 						key={item._id}
 						onPress={() => navigate(path, { item })}
+						favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
 					/>
 				))}
 			</NativeList>
