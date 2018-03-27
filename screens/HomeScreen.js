@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
                 key={item.label}
                 {...item}
                 navigation={this.props.navigation}
-                />
+              />
             ))
           }
         </View>
