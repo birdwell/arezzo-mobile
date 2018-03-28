@@ -20,7 +20,8 @@
       "afterEach": false,
       "after": false,
       "jest": false,
-      "Promise": false
+      "Promise": false,
+      "__DEV__": true
     },
     "rules": {
       "quotes": ["error", "single", { "allowTemplateLiterals": true } ],
