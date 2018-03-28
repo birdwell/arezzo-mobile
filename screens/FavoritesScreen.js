@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, AsyncStorage, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import store from 'react-native-simple-store';
 import List from '../components/discovery/list/List';
 
 export default class FavoritesScreen extends React.Component {
@@ -24,6 +25,7 @@ export default class FavoritesScreen extends React.Component {
       'didFocus',
       this.getFavorites
     );
+    this.getFavorites();
   }
 
   componentWillUnmount() {
@@ -32,22 +34,15 @@ export default class FavoritesScreen extends React.Component {
 
   getFavorites = async () => {
     try {
-      const rawItems = await AsyncStorage.getItem('@Favorites');
-      if (rawItems !== null) {
-        const items = JSON.parse(rawItems);
-        this.setState({ items });
-      }
+      const items = await store.get('favorites');
+      this.setState({ items });
     } catch (error) {
       this.setState({ error });
     }
   }
 
   clearFavorites = () => {
-    AsyncStorage.clear((error) => { 
-      if(error) {
-        this.setState({ error });
-      }
-    });
+    store.delete('favorites');
   }
 
   render() {
