@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import Map from './map/Map';
 import List from './list/List';
+import FilterBase from './filter/View';
 import {
 	FontAwesome,
 	Ionicons,
@@ -10,6 +11,7 @@ import {
 
 const MAP = 'Map';
 const LIST = 'List';
+const FILTER = 'Filter';
 const ICON_SIZE = 20;
 
 class Discovery extends Component {
@@ -19,7 +21,8 @@ class Discovery extends Component {
 	}
 
 	state = {
-		view: LIST
+		view: LIST,
+		previousView: null,
 	}
 	
 	changeView = (view) => {
@@ -44,6 +47,19 @@ class Discovery extends Component {
 		);
 	}
 
+	renderFilters(currentView) {
+		if(currentView !== FILTER)
+		{
+			this.setState( {previousView: currentView});
+			this.changeView(FILTER);
+		}
+		else
+		{
+			this.changeView(this.state.previousView);
+		}	
+		
+	}
+
 	render() {
 		const { items, path } = this.props;
 		const { view } = this.state;
@@ -51,7 +67,7 @@ class Discovery extends Component {
 		return (
 			<View style={styles.container}>
 				<View style={styles.buttonRow}>
-					<TouchableOpacity style={styles.iconButton}>
+					<TouchableOpacity style={styles.iconButton} onPress={() => this.renderFilters(view)}>
 						<Ionicons name="ios-options" size={ICON_SIZE} color="black" />
 						<Text style={styles.buttonLabel}>Filters</Text>
 					</TouchableOpacity>
@@ -60,6 +76,7 @@ class Discovery extends Component {
 				</View>
 					{view === MAP && <Map items={items} path={path} />}
 					{view === LIST && <List items={items} path={path} />}
+					{view === FILTER && <FilterBase />}
 			</View>
 		);
 	}
