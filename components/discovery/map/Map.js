@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { MapView } from 'expo';
 import Marker from './Marker';
 
@@ -96,34 +96,33 @@ class Map extends Component {
 				}
 
 				</MapView>
-				<View style={styles.infoPane}>
-					{ selectedMarker && (
+				{selectedMarker && (
+					<View style={styles.infoPane}>
 						<Text>{ selectedMarker.title }</Text>
-					)}
-					{ selectedMarker && (
 						<Text>{ selectedMarker.description }</Text>
-					)}
-				</View>
+					</View>
+				)}
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-	container: {
-		...StyleSheet.absoluteFillObject,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
-	map: {
-		...StyleSheet.absoluteFillObject,
-	},
-	infoPane: {
-		backgroundColor: 'rgba(255,255,255,0.9)',
-		paddingHorizontal: 18,
-    	paddingVertical: 12,
-    	borderRadius: 20,
-	}
+    container: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flex: 1,
+    },
+    map: {
+        flex: 1,
+        ...StyleSheet.absoluteFillObject
+    },
+    infoPane: {
+        backgroundColor: 'rgba(255,255,255,0.9)',
+        paddingHorizontal: 18,
+        paddingVertical: 12,
+        borderRadius: 20
+    }
 });
 
 export default Map;
