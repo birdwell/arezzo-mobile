@@ -42,25 +42,6 @@ class Map extends Component {
         }
     }
 
-<<<<<<< HEAD
-	onMarkerPress = (item) => {
-		this.setState({
-			region: {
-				latitude: item.latitude,
-				longitude: item.longitude,
-				latitudeDelta: 0.01,
-				longitudeDelta: 0.01,
-			},
-			selectedMarker: item
-		}, () => {
-			this.map.animateToRegion({
-				...item,
-				latitudeDelta: this.state.region.latitudeDelta,
-				longitudeDelta: this.state.region.longitudeDelta,
-			}, 350);
-		});
-	}
-=======
     setupItems(newItems) {
         const items = newItems.map(x => {
             if (!x.location || !x.location.geo) {
@@ -74,7 +55,6 @@ class Map extends Component {
         });
         this.setState({ items });
     }
->>>>>>> 9007bacca3e9ff8c00d91f6621128d4d1eeb20e8
 
     state = {
         selectedMarker: null,
