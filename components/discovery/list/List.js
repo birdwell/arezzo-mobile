@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import store from 'react-native-simple-store';
 import { Font } from 'expo';
 import { withNavigation } from 'react-navigation';
@@ -68,17 +68,20 @@ class List extends Component {
 		}
 
 		return (
-			<NativeList containerStyle={{ marginTop: 0 }}>
-				{items && items.map(item => (
-					<ListItem
-						item={item}
-						key={item._id}
-						onPress={() => navigate(path, { item })}
-						favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
-						onFavorite={this.getFavorites}
-					/>
-				))}
-			</NativeList>
+			<ScrollView>
+				<NativeList containerStyle={{ marginTop: 0 }}>
+					{items && items.map(item => (
+						<ListItem
+							item={item}
+							key={item._id}
+							onPress={() => navigate(path, { item })}
+							favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
+							onFavorite={this.getFavorites}
+						/>
+					))}
+				</NativeList>
+			</ScrollView>
+
 		);
 	}
 }
