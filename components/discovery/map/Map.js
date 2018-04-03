@@ -60,8 +60,8 @@ class Map extends Component {
 			region: {
 				latitude: item.latitude,
 				longitude: item.longitude,
-				latitudeDelta: 0.0922,
-				longitudeDelta: 0.0421,
+				latitudeDelta: 0.01,
+				longitudeDelta: 0.01,
 			},
 			selectedMarker: item
 		}, () => {
