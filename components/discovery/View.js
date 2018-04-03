@@ -75,9 +75,8 @@ const styles = StyleSheet.create({
 		borderColor: 'grey'
 	},
 	buttonRow: {
-		flex: 1,
 		flexDirection: 'row',
-		maxHeight: 35,
+		height: 35,
 		marginTop: 10,
 	},
 	buttonLabel: {
