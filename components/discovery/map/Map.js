@@ -94,6 +94,7 @@ class Map extends Component {
     render() {
         const { selectedMarker, region, items } = this.state;
         const { navigation: { navigate }, path } = this.props;
+
         return (
             <View style={styles.container}>
                 <MapView
