@@ -10,7 +10,7 @@ import ListItem from './ListItem';
 
 class List extends Component {
 	static propTypes = {
-		items: PropTypes.array.isRequired,
+		items: PropTypes.array,
 		navigation: PropTypes.shape({
 			navigate: PropTypes.func.isRequired,
 		}),
@@ -18,12 +18,14 @@ class List extends Component {
 		favoriteAll: PropTypes.bool,
 		loading: PropTypes.bool,
 		onRefresh: PropTypes.func,
-		refreshing: PropTypes.bool
+		refreshing: PropTypes.bool,
+		fetchItems: PropTypes.func
 	}
 
 	static defaultProps = {
 		favoriteAll: false,
-		items: []
+		items: [],
+		refreshing: false,
 	}
 
 	state = {
@@ -38,7 +40,13 @@ class List extends Component {
 	}
 
 	getFavorites = async () => {
+		const { fetchItems } = this.props;
 		const favorited = await store.get('favorites');
+
+		if (fetchItems) {
+			fetchItems();
+		}
+
 		this.setState({ favorited: favorited || [] });
 	}
 

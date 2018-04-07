@@ -3,20 +3,25 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from './SliderEntry.style';
+import { withNavigation } from 'react-navigation';
 import { getImage } from '../../utils';
 
-export default class SliderEntry extends Component {
+class SliderEntry extends Component {
 
 	static propTypes = {
-		data: PropTypes.object.isRequired,
+		item: PropTypes.object.isRequired,
 		even: PropTypes.bool,
 		parallax: PropTypes.bool,
-		parallaxProps: PropTypes.object
+		parallaxProps: PropTypes.object,
+		navigation: PropTypes.shape({
+			navigate: PropTypes.func.isRequired,
+		}),
+		path: PropTypes.string,
 	};
 
 	get image() {
-		const { data, parallax, parallaxProps, even } = this.props;
-		const url = getImage(data);
+		const { item, parallax, parallaxProps, even } = this.props;
+		const url = getImage(item);
 		return parallax ? (
 			<ParallaxImage
 				source={{ uri: url }}
@@ -36,8 +41,8 @@ export default class SliderEntry extends Component {
 	}
 
 	render() {
-		const { data: { title }, even } = this.props;
-
+		const { item, even, navigation: { navigate }, path } = this.props;
+		const { title } = item;
 		const uppercaseTitle = title ? (
 			<Text
 				style={[styles.title, even ? styles.titleEven : {}]}
@@ -51,7 +56,7 @@ export default class SliderEntry extends Component {
 			<TouchableOpacity
 				activeOpacity={1}
 				style={styles.slideInnerContainer}
-				onPress={() => { alert(`You've clicked '${title}'`); }}
+				onPress={() => navigate((path || `${item.__t}Details`), { item })}
 			>
 				<View style={styles.shadow} />
 				<View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
@@ -65,3 +70,5 @@ export default class SliderEntry extends Component {
 		);
 	}
 }
+
+export default withNavigation(SliderEntry);

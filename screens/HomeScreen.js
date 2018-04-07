@@ -96,20 +96,32 @@ export default class HomeScreen extends React.Component {
   } 
 
   _renderItem({ item, index }, parallaxProps) {
-    return <SliderEntry data={item} even={(index + 1) % 2 === 0} parallax parallaxProps={parallaxProps} />;
+    return <SliderEntry path="EventDetails" item={item} even={(index + 1) % 2 === 0} parallax parallaxProps={parallaxProps} />;
   }
 
   render() {
     const dimensions = Dimensions.get('window');
-    const imageHeight = Math.round(dimensions.width * 9 / 16);
+    const imageHeight = Math.round(dimensions.width * 8 / 16);
     const imageWidth = dimensions.width;
+
     return (
       <View style={{ flex: 1 }}>
         <Image style={{ height: imageHeight, width: imageWidth }} resizeMode="cover" source={Arezzo} />
         <View style={styles.container}>
           <View style={styles.homeGrid}>
             {
-              HomeGrid.map(item => (
+              HomeGrid.slice(0,3).map(item => (
+                <HomeIcon
+                  key={item.label}
+                  {...item}
+                  navigation={this.props.navigation}
+                />
+              ))
+            }
+          </View>
+          <View style={styles.homeGrid}>
+            {
+              HomeGrid.slice(3,6).map(item => (
                 <HomeIcon
                   key={item.label}
                   {...item}
