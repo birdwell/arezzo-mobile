@@ -34,13 +34,13 @@ class EventDetails extends Component {
             <View style={styles.container}>
                 {item.website && (
                     <View style={styles.titleContainer}>
+                        <Text style={styles.titleText}>{title}</Text>
                         <FontAwesome
                             style={styles.website}
                             name={'external-link'}
                             size={20}
                             onPress={() => {WebBrowser.openBrowserAsync(item.website);}}
                         />
-                        <Text style={styles.titleText}>{title}</Text>
                     </View>
                 )}
                 <View styles={styles.eventDetails}>
@@ -54,7 +54,7 @@ class EventDetails extends Component {
                 </View>
                 <Text style={styles.detailHeader}>Location</Text>
                 <TouchableOpacity onPress={() => openMap({ longitude, latitude })}>
-                    <Text>
+                    <Text selectable>
                         {`${street1}, ${suburb} ${state}`}
                     </Text>
                 </TouchableOpacity>
@@ -97,7 +97,8 @@ var styles = StyleSheet.create({
     },
     titleContainer: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 });
 

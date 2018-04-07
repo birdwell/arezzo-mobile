@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import store from 'react-native-simple-store';
 import { Font } from 'expo';
 import { withNavigation } from 'react-navigation';
@@ -15,7 +15,10 @@ class List extends Component {
 			navigate: PropTypes.func.isRequired,
 		}),
 		path: PropTypes.string,
-		favoriteAll: PropTypes.bool
+		favoriteAll: PropTypes.bool,
+		loading: PropTypes.bool,
+		onRefresh: PropTypes.func,
+		refreshing: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -55,9 +58,21 @@ class List extends Component {
 		);
 	}
 
+	renderLoading () {
+		return (
+			<View style={styles.loadingContiner}>
+				<ActivityIndicator size="large" color="#000000" />
+			</View>
+		);
+	}
+
 	render() {
-		const { items, path, navigation: { navigate }, favoriteAll } = this.props;
+		const { items, path, navigation: { navigate }, favoriteAll, loading, refreshing, onRefresh } = this.props;
 		const { favorited } = this.state;
+
+		if (loading) {
+			return this.renderLoading();
+		}
 
 		if (!items || (Array.isArray(items) && items.length) === 0) {
 			return this.renderEmpty();
@@ -68,7 +83,14 @@ class List extends Component {
 		}
 
 		return (
-			<ScrollView>
+			<ScrollView
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					/>
+				}
+			>
 				<NativeList containerStyle={{ marginTop: 0 }}>
 					{items && items.map(item => (
 						<ListItem
@@ -89,7 +111,7 @@ class List extends Component {
 const styles = StyleSheet.create({
 	emptyText: {
 		textAlign: 'center'
-	}
+	},
 });
 
 export default withNavigation(List);
