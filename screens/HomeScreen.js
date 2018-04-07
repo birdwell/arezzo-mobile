@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   Image,
+  Dimensions
 } from 'react-native';
 import {
   MaterialCommunityIcons,
@@ -10,9 +10,25 @@ import {
   MaterialIcons
 } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
+import Carousel from 'react-native-snap-carousel';
+
 import HomeIcon from './components/HomeIcon';
 import { getItems } from '../api';
 import Arezzo from '../assets/images/arezzo.png';
+import styles from './HomeScreenStyle';
+import SliderEntry from './components/SliderEntry';
+
+const { width: viewportWidth } = Dimensions.get('window');
+
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+const slideWidth = wp(75);
+const itemHorizontalMargin = wp(2);
+const sliderWidth = viewportWidth;
+const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const HomeGrid = [
   {
@@ -68,36 +84,55 @@ export default class HomeScreen extends React.Component {
     }),
   }
 
+  state = {
+    items: []
+  }
+
+  componentDidMount = async () => {
+    const items = await getItems('event');
+    this.setState({ 
+      items: items.slice(0,5)
+    });
+  } 
+
+  _renderItem({ item, index }, parallaxProps) {
+    return <SliderEntry data={item} even={(index + 1) % 2 === 0} parallax parallaxProps={parallaxProps} />;
+  }
+
   render() {
+    const dimensions = Dimensions.get('window');
+    const imageHeight = Math.round(dimensions.width * 9 / 16);
+    const imageWidth = dimensions.width;
     return (
-      <View style={styles.container}>
-        <Image style={{ flex: 1, height: undefined, width: undefined, marginTop: 10 }} resizeMode="contain" source={Arezzo} />
-        <View style={styles.homeGrid}>
-          {
-            HomeGrid.map(item => (
-              <HomeIcon
-                key={item.label}
-                {...item}
-                navigation={this.props.navigation}
-              />
-            ))
-          }
+      <View style={{ flex: 1 }}>
+        <Image style={{ height: imageHeight, width: imageWidth }} resizeMode="cover" source={Arezzo} />
+        <View style={styles.container}>
+          <View style={styles.homeGrid}>
+            {
+              HomeGrid.map(item => (
+                <HomeIcon
+                  key={item.label}
+                  {...item}
+                  navigation={this.props.navigation}
+                />
+              ))
+            }
+          </View>
+          <View style={styles.carouselContainer}>
+            <Carousel
+              data={this.state.items}
+              renderItem={this._renderItem}
+              sliderWidth={sliderWidth}
+              itemWidth={itemWidth}
+              hasParallaxImages
+              containerCustomStyle={styles.slider}
+              contentContainerCustomStyle={styles.sliderContentContainer}
+              layout={'default'}
+              loop={true}
+            />
+          </View>
         </View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  homeGrid: {
-    flex: 2,
-    marginTop: 5,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-});

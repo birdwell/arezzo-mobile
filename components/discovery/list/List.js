@@ -96,7 +96,7 @@ class List extends Component {
 						<ListItem
 							item={item}
 							key={item._id}
-							onPress={() => navigate(path, { item })}
+							onPress={() => navigate((path || `${item.__t}Details`), { item })}
 							favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
 							onFavorite={this.getFavorites}
 						/>
