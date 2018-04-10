@@ -38,8 +38,8 @@ export default class HomeIcon extends React.Component {
 const styles = StyleSheet.create({
 	homeIcon: {
 		padding: 10,
-		width: 125,
-		height: 125,
+		width: 100,
+		height: 100,
 		justifyContent: 'center',
         alignItems: 'center',
 	},

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import store from 'react-native-simple-store';
 import { Font } from 'expo';
 import { withNavigation } from 'react-navigation';
@@ -10,17 +10,22 @@ import ListItem from './ListItem';
 
 class List extends Component {
 	static propTypes = {
-		items: PropTypes.array.isRequired,
+		items: PropTypes.array,
 		navigation: PropTypes.shape({
 			navigate: PropTypes.func.isRequired,
 		}),
 		path: PropTypes.string,
-		favoriteAll: PropTypes.bool
+		favoriteAll: PropTypes.bool,
+		loading: PropTypes.bool,
+		onRefresh: PropTypes.func,
+		refreshing: PropTypes.bool,
+		fetchItems: PropTypes.func
 	}
 
 	static defaultProps = {
 		favoriteAll: false,
-		items: []
+		items: [],
+		refreshing: false,
 	}
 
 	state = {
@@ -35,7 +40,13 @@ class List extends Component {
 	}
 
 	getFavorites = async () => {
+		const { fetchItems } = this.props;
 		const favorited = await store.get('favorites');
+
+		if (fetchItems) {
+			fetchItems();
+		}
+
 		this.setState({ favorited: favorited || [] });
 	}
 
@@ -55,9 +66,21 @@ class List extends Component {
 		);
 	}
 
+	renderLoading () {
+		return (
+			<View style={styles.loadingContiner}>
+				<ActivityIndicator size="large" color="#000000" />
+			</View>
+		);
+	}
+
 	render() {
-		const { items, path, navigation: { navigate }, favoriteAll } = this.props;
+		const { items, path, navigation: { navigate }, favoriteAll, loading, refreshing, onRefresh } = this.props;
 		const { favorited } = this.state;
+
+		if (loading) {
+			return this.renderLoading();
+		}
 
 		if (!items || (Array.isArray(items) && items.length) === 0) {
 			return this.renderEmpty();
@@ -68,17 +91,27 @@ class List extends Component {
 		}
 
 		return (
-			<NativeList containerStyle={{ marginTop: 0 }}>
-				{items && items.map(item => (
-					<ListItem
-						item={item}
-						key={item._id}
-						onPress={() => navigate(path, { item })}
-						favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
-						onFavorite={this.getFavorites}
+			<ScrollView
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
 					/>
-				))}
-			</NativeList>
+				}
+			>
+				<NativeList containerStyle={{ marginTop: 0 }}>
+					{items && items.map(item => (
+						<ListItem
+							item={item}
+							key={item._id}
+							onPress={() => navigate((path || `${item.__t}Details`), { item })}
+							favorited={favoriteAll || !!favorited.find((x) => x._id === item._id)}
+							onFavorite={this.getFavorites}
+						/>
+					))}
+				</NativeList>
+			</ScrollView>
+
 		);
 	}
 }
@@ -86,7 +119,7 @@ class List extends Component {
 const styles = StyleSheet.create({
 	emptyText: {
 		textAlign: 'center'
-	}
+	},
 });
 
 export default withNavigation(List);

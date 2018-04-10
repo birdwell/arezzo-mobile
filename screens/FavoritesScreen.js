@@ -17,7 +17,8 @@ export default class FavoritesScreen extends React.Component {
 
   state = {
     items: [],
-    error: null
+    error: null,
+    refreshing: false
   }
 
   componentDidMount() {
@@ -33,11 +34,13 @@ export default class FavoritesScreen extends React.Component {
   }
 
   getFavorites = async () => {
+    this.setState({ refreshing: true });
+
     try {
       const items = await store.get('favorites');
-      this.setState({ items });
+      this.setState({ items, refreshing: false });
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error, refreshing: false });
     }
   }
 
@@ -46,14 +49,14 @@ export default class FavoritesScreen extends React.Component {
   }
 
   render() {
-    const { items, error } = this.state;
-    
+    const { items, error, refreshing } = this.state;
+
     return (
       <View style={styles.container}>
-       {error && <Text>{ error }</Text>}
-        <List items={items} favoriteAll />
+        {error && <Text>{error}</Text>}
+        <List items={items} favoriteAll refreshing={refreshing} onRefresh={this.getFavorites} fetchItems={this.getFavorites}/>
         <TouchableOpacity onPress={this.clearFavorites}>
-          <Text>Clear All Favorites</Text>
+          <Text style={styles.clearFavorites} >Clear All Favorites</Text>
         </TouchableOpacity>
       </View>
     );
@@ -63,7 +66,10 @@ export default class FavoritesScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 10,
     backgroundColor: '#fff',
   },
+  clearFavorites: {
+    textAlign: 'center'
+  }
 });
