@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import BaseFilter from './BaseFilters';
 
 class Filter extends Component {
 	render() {
@@ -21,7 +22,7 @@ class Filter extends Component {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<Text>I am the modal content!</Text>
+				<BaseFilter />
 			</View>
 		);
 	}
