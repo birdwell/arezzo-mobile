@@ -1,19 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-class FilterBase extends Component {
-
-    render() {
-        return (
-        <Text> Made it here fellas </Text>
-        );
-    }
-
-}
-
-export default FilterBase;
-=======
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 class Filter extends Component {
@@ -73,4 +58,3 @@ const styles = StyleSheet.create({
 });
 
 export default Filter;
->>>>>>> master
