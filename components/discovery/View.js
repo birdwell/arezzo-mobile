@@ -27,7 +27,25 @@ class Discovery extends Component {
 
 	state = {
 		view: LIST,
-		showFilters: false
+		showFilters: false,
+		currentFilters: {
+			wifi: false,
+			accessible: false,
+			proximity: 5,
+			price: 3,
+			suggestedAge: 12
+		}
+	}
+
+	onFilterChange = (name, value) => {
+
+		this.setState(prevState => ({
+			currentFilters: {
+				...prevState.currentFilters,
+				name: value
+			}
+		}));
+		
 	}
 
 	changeView = (view) => {
@@ -59,7 +77,7 @@ class Discovery extends Component {
 
 	render() {
 		const { items, path, loading, onRefresh, refreshing } = this.props;
-		const { view, showFilters } = this.state;
+		const { view, showFilters, currentFilters } = this.state;
 
 		return (
 			<View style={styles.container}>
@@ -74,7 +92,7 @@ class Discovery extends Component {
 				{view === MAP && <Map items={items} path={path} />}
 				{view === LIST && <List items={items} loading={loading} path={path} onRefresh={onRefresh} refreshing={refreshing} />}
 				<Modal isVisible={showFilters} style={styles.modal} onBackdropPress={this.toggleFilters}>
-					<Filter toggleFilters={this.toggleFilters} />
+					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onChange={this.onFilterChange}/>
 				</Modal>
 			</View>
 		);

@@ -4,17 +4,9 @@ import {CheckBox, Slider} from 'react-native-elements';
 
 class BaseFilter extends Component {
 
-    state={
-        wifi: false,
-        accessible: false,
-        proximity: 5,
-        price: 3,
-        suggestedAge: 12
-    }
-
-    roundToDollarSigns()
+    roundToDollarSigns(numSigns)
     {
-        let numberOfSigns = Math.round((this.state.price));
+        let numberOfSigns = Math.round((numSigns));
 
         let stringSigns = "";
 
@@ -27,20 +19,23 @@ class BaseFilter extends Component {
     }
 
     render() {
+
+        const {currentFilters, onChange} = this.props;
+
         return(
             <View>
-                <CheckBox title="Wifi" checked={this.state.wifi} onPress={() => this.setState({wifi: !this.state.wifi})}/>
+                <CheckBox title="Wifi" checked={currentFilters.wifi} onPress={() => onChange({wifi: !currentFilters.wifi})}/>
 
-                <CheckBox title="Handicap Accessible" checked={this.state.accessible} onPress={() => this.setState({accessible: !this.state.accessible})}/>
+                <CheckBox title="Handicap Accessible" checked={currentFilters.accessible} onPress={() => onChange({accessible: !currentFilters.accessible})}/>
 
-                <Text>Proximity: {Math.round(this.state.proximity)} km</Text>
-                <Slider maximumValue={10} minimumValue={1} value={this.state.proximity} onValueChange={(value) => this.setState({proximity: value})}/>
+                <Text>Proximity: {Math.round(currentFilters.proximity)} km</Text>
+                <Slider maximumValue={10} minimumValue={0} value={currentFilters.proximity} onValueChange={(value) => onChange({proximity: value})}/>
 
-                <Text>Price: {Math.round(this.state.price)}</Text>
-                <Slider maximumValue={5} minimumValue={1} value={this.state.price} onValueChange={(value) => this.setState({price: value})}/>
+                <Text>Price: {Math.round(currentFilters.price)}</Text>
+                <Slider maximumValue={5} minimumValue={1} value={currentFilters.price} onValueChange={(value) => onChange({price: value})}/>
 
-                <Text>Suggested Age: {Math.round(this.state.suggestedAge)}+</Text>
-                <Slider maximumValue={18} minimumValue={3} value={this.state.suggestedAge} onValueChange={(value) => this.setState({suggestedAge: value})}/>
+                <Text>Suggested Age: {Math.round(currentFilters.suggestedAge)}+</Text>
+                <Slider maximumValue={18} minimumValue={0} value={currentFilters.suggestedAge} onValueChange={(value) => onChange({suggestedAge: value})}/>
             </View>
         );
     }
