@@ -4,7 +4,7 @@ import BaseFilter from './BaseFilters';
 
 class Filter extends Component {
 	render() {
-		const { toggleFilters, currentFilters, onChange } = this.props;
+		const { toggleFilters, currentFilters, onFilterChange } = this.props;
 		
 		return (
 			<View style={styles.filterContent}>
@@ -22,7 +22,7 @@ class Filter extends Component {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<BaseFilter currentFilters={currentFilters} onChange={onChange}/>
+				<BaseFilter currentFilters={currentFilters} onFilterChange={onFilterChange}/>
 			</View>
 		);
 	}

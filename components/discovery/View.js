@@ -42,7 +42,7 @@ class Discovery extends Component {
 		this.setState(prevState => ({
 			currentFilters: {
 				...prevState.currentFilters,
-				name: value
+				[name]: value
 			}
 		}));
 		
@@ -92,7 +92,7 @@ class Discovery extends Component {
 				{view === MAP && <Map items={items} path={path} />}
 				{view === LIST && <List items={items} loading={loading} path={path} onRefresh={onRefresh} refreshing={refreshing} />}
 				<Modal isVisible={showFilters} style={styles.modal} onBackdropPress={this.toggleFilters}>
-					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onChange={this.onFilterChange}/>
+					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onFilterChange={this.onFilterChange}/>
 				</Modal>
 			</View>
 		);
