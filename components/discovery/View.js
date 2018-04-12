@@ -30,10 +30,10 @@ class Discovery extends Component {
 		showFilters: false,
 		currentFilters: {
 			wifi: false,
-			accessible: false,
-			proximity: 5,
-			price: 3,
-			suggestedAge: 12
+			accessibility: false,
+			location: 0,
+			price: 0,
+			suggestedAge: 0
 		}
 	}
 
@@ -43,9 +43,49 @@ class Discovery extends Component {
 			currentFilters: {
 				...prevState.currentFilters,
 				[name]: value
-			}
-		}));
+			}, 
+		}), this.applyFilters());
 		
+	}
+
+	applyFilters = () => {
+
+		const {currentFilters} = this.state;
+		const {items} = this.props;
+
+		let newItemList = [];
+
+		for(var propertyName in currentFilters)
+		{
+			for(var item in items)
+			{
+				//interpreting nulls, false, 0's as unapplied filters
+				if(currentFilters[propertyName] != 0 && currentFilters[propertyName] != null && currentFilters[propertyName] != false)
+				{
+					if(currentFilters[propertyName] === true)
+					{
+						if(item[propertyName] === true)
+						{
+							newItemList.push(item);
+						}
+					}
+					else if(propertyName === 'suggestedAge')
+					{
+						if(item[propertyName] >= currentFilter[propertyName])
+						{
+							newItemList.push(item);
+						}
+					}
+					else if(item[propertyName] <= currentFilter[propertyName])
+					{
+						newItemList.push(item);
+					}
+				}
+			}
+		}
+
+		this.setState({items: newItemList});
+
 	}
 
 	changeView = (view) => {
@@ -73,6 +113,7 @@ class Discovery extends Component {
 	toggleFilters = () => {
 		const { showFilters } = this.state;
 		this.setState({ showFilters: !showFilters });
+
 	}
 
 	render() {
