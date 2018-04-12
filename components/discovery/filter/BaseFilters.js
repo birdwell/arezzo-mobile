@@ -26,13 +26,13 @@ class BaseFilter extends Component {
             <View>
                 <CheckBox title="Wifi" checked={currentFilters.wifi} onPress={() => onFilterChange('wifi', !currentFilters.wifi)}/>
 
-                <CheckBox title="Handicap Accessible" checked={currentFilters.accessible} onPress={() => onFilterChange('accessible', !currentFilters.accessible)}/>
+                <CheckBox title="Handicap Accessible" checked={currentFilters.accessibility} onPress={() => onFilterChange('accessibility', !currentFilters.accessibility)}/>
 
-                <Text>Proximity: {Math.round(currentFilters.proximity)} km</Text>
-                <Slider maximumValue={10} minimumValue={0} value={currentFilters.proximity} onValueChange={(value) => onFilterChange('proximity', value)}/>
+                <Text>Proximity: {Math.round(currentFilters.location)} km</Text>
+                <Slider maximumValue={10} minimumValue={0} value={currentFilters.location} onValueChange={(value) => onFilterChange('location', value)}/>
 
                 <Text>Price: {Math.round(currentFilters.price)}</Text>
-                <Slider maximumValue={5} minimumValue={1} value={currentFilters.price} onValueChange={(value) => onFilterChange('price', value)}/>
+                <Slider maximumValue={5} minimumValue={0} value={currentFilters.price} onValueChange={(value) => onFilterChange('price', value)}/>
 
                 <Text>Suggested Age: {Math.round(currentFilters.suggestedAge)}+</Text>
                 <Slider maximumValue={18} minimumValue={0} value={currentFilters.suggestedAge} onValueChange={(value) => onFilterChange('suggestedAge', value)}/>
