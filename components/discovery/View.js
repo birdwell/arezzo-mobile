@@ -22,69 +22,14 @@ class Discovery extends Component {
 		path: PropTypes.string.isRequired,
 		loading: PropTypes.bool,
 		refreshing: PropTypes.bool,
-		onRefresh: PropTypes.func
+		onRefresh: PropTypes.func,
+		onFilterChange: PropTypes.func,
+		currentFilters: PropTypes.object
 	}
 
 	state = {
 		view: LIST,
 		showFilters: false,
-		currentFilters: {
-			wifi: false,
-			accessibility: false,
-			location: 0,
-			price: 0,
-			suggestedAge: 0
-		}
-	}
-
-	onFilterChange = (name, value) => {
-
-		this.setState(prevState => ({
-			currentFilters: {
-				...prevState.currentFilters,
-				[name]: value
-			}, 
-		}), this.applyFilters());
-		
-	}
-
-	applyFilters = () => {
-
-		const {currentFilters} = this.state;
-		const {items} = this.props;
-
-		let newItemList = [];
-
-		for(var propertyName in currentFilters)
-		{
-			for(var item in items)
-			{
-				//interpreting nulls, false, 0's as unapplied filters
-				if(currentFilters[propertyName] != 0 && currentFilters[propertyName] != null && currentFilters[propertyName] != false)
-				{
-					if(currentFilters[propertyName] === true)
-					{
-						if(item[propertyName] === true)
-						{
-							newItemList.push(item);
-						}
-					}
-					else if(propertyName === 'suggestedAge')
-					{
-						if(item[propertyName] >= currentFilter[propertyName])
-						{
-							newItemList.push(item);
-						}
-					}
-					else if(item[propertyName] <= currentFilter[propertyName])
-					{
-						newItemList.push(item);
-					}
-				}
-			}
-		}
-
-		this.setState({items: newItemList});
 
 	}
 
@@ -117,8 +62,8 @@ class Discovery extends Component {
 	}
 
 	render() {
-		const { items, path, loading, onRefresh, refreshing } = this.props;
-		const { view, showFilters, currentFilters } = this.state;
+		const { items, path, loading, onRefresh, refreshing, onFilterChange, currentFilters } = this.props;
+		const { view, showFilters } = this.state;
 
 		return (
 			<View style={styles.container}>
@@ -133,7 +78,7 @@ class Discovery extends Component {
 				{view === MAP && <Map items={items} path={path} />}
 				{view === LIST && <List items={items} loading={loading} path={path} onRefresh={onRefresh} refreshing={refreshing} />}
 				<Modal isVisible={showFilters} style={styles.modal} onBackdropPress={this.toggleFilters}>
-					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onFilterChange={this.onFilterChange}/>
+					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onFilterChange={onFilterChange}/>
 				</Modal>
 			</View>
 		);

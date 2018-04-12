@@ -88,6 +88,8 @@ export default class HomeScreen extends React.Component {
     items: []
   }
 
+  
+
   componentDidMount = async () => {
     const items = await getItems('event');
     this.setState({ 
