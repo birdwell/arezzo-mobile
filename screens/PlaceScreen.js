@@ -30,43 +30,28 @@ class PlaceScreen extends React.Component {
 				...prevState.currentFilters,
 				[name]: value
 			}, 
-		}), this.applyFilters());
+		}), this.applyFilters);
 		
 	}
 
     applyFilters = () => {
 
-		const {currentFilters} = this.state;
-		const {items} = this.props;
+		const {currentFilters, items} = this.state;
 
-		let newItemList = [];
+        let newItemList = [];
+        
+        let filterNames = Object.keys(currentFilters);
 
-		for(var propertyName in currentFilters)
+		for(var propertyName in filterNames)
 		{
+
 			for(var item in items)
 			{
-				//interpreting nulls, false, 0's as unapplied filters
-				if(currentFilters[propertyName] != 0 && currentFilters[propertyName] != null && currentFilters[propertyName] != false)
-				{
-					if(currentFilters[propertyName] === true)
-					{
-						if(item[propertyName] === true)
-						{
-							newItemList.push(item);
-						}
-					}
-					else if(propertyName === 'suggestedAge')
-					{
-						if(item[propertyName] >= currentFilter[propertyName])
-						{
-							newItemList.push(item);
-						}
-					}
-					else if(item[propertyName] <= currentFilter[propertyName])
-					{
-						newItemList.push(item);
-					}
-				}
+                if(items[item][filterNames[propertyName]] == currentFilters[filterNames[propertyName]])
+                {
+                    console.log(items[item]);
+                    newItemList.push(items[item]);
+                }
 			}
 		}
 
