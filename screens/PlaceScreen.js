@@ -65,7 +65,7 @@ class PlaceScreen extends React.Component {
         try {
             const getItems = getProp('getItems', this.props);
             const items = await getItems();
-            this.setState({ items, loading: false });
+            this.setState({ items, loading: false, });
         } catch (error) {
             this.setState({ error: 'Unable to get items.', loading: false });
         }
@@ -76,7 +76,7 @@ class PlaceScreen extends React.Component {
             this.setState({ refreshing: true });
             const getItems = getProp('getItems', this.props);
             const items = await getItems();
-            this.setState({ items, refreshing: false  });
+            this.setState({ items, refreshing: false,  });
         } catch (error) {
             this.setState({ error: 'Unable to get items.', refreshing: false });
         }
