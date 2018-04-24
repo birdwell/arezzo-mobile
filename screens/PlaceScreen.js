@@ -13,6 +13,7 @@ class PlaceScreen extends React.Component {
     state = {
         items: [],
         loading: false,
+        originalItems: [],
         refreshing: false,
         currentFilters: {
 			wifi: false,
@@ -36,24 +37,29 @@ class PlaceScreen extends React.Component {
 
     applyFilters = () => {
 
-		const {currentFilters, items} = this.state;
+		const {currentFilters, items, originalItems} = this.state;
 
         let newItemList = [];
         
         let filterNames = Object.keys(currentFilters);
 
-		for(var propertyName in filterNames)
-		{
-
-			for(var item in items)
-			{
-                if(items[item][filterNames[propertyName]] == currentFilters[filterNames[propertyName]])
+        for(var i = 0; i<filterNames.length; i++)
+        {
+            for(var k = 0; k<originalItems.length; k++)
+            {
+                //if the filter type is a boolean
+                if(currentFilters[filterNames[i]] === true || currentFilters[filterNames[i]] === false)
                 {
-                    console.log(items[item]);
-                    newItemList.push(items[item]);
+                    if(currentFilters[filterNames[i]] === originalItems[k][filterNames[i]])
+                    {
+                        newItemList.push(originalItems[k]);
+                    }
                 }
-			}
-		}
+            }
+
+        }
+
+        console.log(newItemList);
 
 		this.setState({items: newItemList});
 
@@ -65,7 +71,8 @@ class PlaceScreen extends React.Component {
         try {
             const getItems = getProp('getItems', this.props);
             const items = await getItems();
-            this.setState({ items, loading: false, });
+            const originalItems = items;
+            this.setState({ items, loading: false, originalItems });
         } catch (error) {
             this.setState({ error: 'Unable to get items.', loading: false });
         }
@@ -76,7 +83,8 @@ class PlaceScreen extends React.Component {
             this.setState({ refreshing: true });
             const getItems = getProp('getItems', this.props);
             const items = await getItems();
-            this.setState({ items, refreshing: false,  });
+            const originalItems = items;
+            this.setState({ items, refreshing: false,  originalItems});
         } catch (error) {
             this.setState({ error: 'Unable to get items.', refreshing: false });
         }
@@ -84,9 +92,10 @@ class PlaceScreen extends React.Component {
 
     render() {
         const { items, loading, refreshing, currentFilters } = this.state;
-        const { navigation: { navigate } } = this.props;
+        const { navigation: { navigate },  label} = this.props;
         const path = getProp('path', this.props);
-
+        const title = getProp('label', this.props);
+        
         return (
             <Discovery 
                 items={items} 
@@ -97,6 +106,7 @@ class PlaceScreen extends React.Component {
                 refreshing={refreshing}
                 onFilterChange={this.onFilterChange}
                 currentFilters={currentFilters}
+                label={title}
             />
         );
     }
