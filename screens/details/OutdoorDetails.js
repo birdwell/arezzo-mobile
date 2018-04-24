@@ -9,8 +9,8 @@ import DetailTile from './DetailTile';
 import { getProps, getImage } from '../../utils';
 import ScrollableHeader from '../../components/common/ScrollableHeader';
 
-class FoodDetails extends Component {
-	static propTypes = {
+class OutdoorDetails extends Component {
+    static propTypes = {
         navigation: PropTypes.shape({
             state: PropTypes.shape({
                 params: PropTypes.shape({
@@ -20,7 +20,6 @@ class FoodDetails extends Component {
             })
         })
     };
-
 
     renderDetails = () => {
         const { item } = getProps(this.props);
@@ -44,13 +43,13 @@ class FoodDetails extends Component {
                         />
                     </View>
                 )}
-                <View styles={styles.FoodDetails}>
+                <View styles={styles.OutdoorDetails}>
                     <Text style={styles.detailHeader}>
                         Details
                     </Text>
                     <View style={styles.detailTiles}>
                         <DetailTile text={start.format('MMM D')} label="Date" />
-                        <DetailTile text={`${start.format('h:mmA')}-${end}`} label="Hours Opens" />
+                        <DetailTile text={`${start.format('h:mmA')}-${end}`} label="Hours Open" />
                     </View>
                 </View>
                 <Text style={styles.detailHeader}>Location</Text>
@@ -103,4 +102,4 @@ var styles = StyleSheet.create({
     },
 });
 
-export default FoodDetails;
+export default OutdoorDetails;
