@@ -24,13 +24,13 @@ class Discovery extends Component {
 		refreshing: PropTypes.bool,
 		onRefresh: PropTypes.func,
 		onFilterChange: PropTypes.func,
-		currentFilters: PropTypes.object
+		currentFilters: PropTypes.object,
+		label: PropTypes.string
 	}
 
 	state = {
 		view: LIST,
 		showFilters: false,
-
 	}
 
 	changeView = (view) => {
@@ -62,7 +62,8 @@ class Discovery extends Component {
 	}
 
 	render() {
-		const { items, path, loading, onRefresh, refreshing, onFilterChange, currentFilters } = this.props;
+		const { items, path, loading, onRefresh, refreshing, onFilterChange, currentFilters, label} = this.props;
+
 		const { view, showFilters } = this.state;
 
 		return (
@@ -78,7 +79,7 @@ class Discovery extends Component {
 				{view === MAP && <Map items={items} path={path} />}
 				{view === LIST && <List items={items} loading={loading} path={path} onRefresh={onRefresh} refreshing={refreshing} />}
 				<Modal isVisible={showFilters} style={styles.modal} onBackdropPress={this.toggleFilters}>
-					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onFilterChange={onFilterChange}/>
+					<Filter toggleFilters={this.toggleFilters} currentFilters={currentFilters} onFilterChange={onFilterChange} label={label}/>
 				</Modal>
 			</View>
 		);

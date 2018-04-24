@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import {CheckBox, Slider} from 'react-native-elements';
+import TypeSpecificFilter from './TypeSpecificFilters';
 
 class BaseFilter extends Component {
 
@@ -20,7 +21,7 @@ class BaseFilter extends Component {
 
     render() {
 
-        const {currentFilters, onFilterChange} = this.props;
+        const {currentFilters, onFilterChange, label} = this.props;
 
         return(
             <View>
@@ -36,6 +37,8 @@ class BaseFilter extends Component {
 
                 <Text>Suggested Age: {Math.round(currentFilters.suggestedAge)}+</Text>
                 <Slider maximumValue={18} minimumValue={0} value={currentFilters.suggestedAge} onValueChange={(value) => onFilterChange('suggestedAge', value)}/>
+
+                <TypeSpecificFilter label={label} />
             </View>
         );
     }

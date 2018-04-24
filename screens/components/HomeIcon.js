@@ -17,8 +17,8 @@ export default class HomeIcon extends React.Component {
 
 	onPress = () => {
 		const { navigation, detailPath, getItems, label, path } = this.props;
-
-		navigation.navigate(path || 'Place', { path: detailPath, getItems, title: label });
+		
+		navigation.navigate(path || 'Place', { path: detailPath, getItems, label });
 	}
 
 	render() {
