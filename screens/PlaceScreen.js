@@ -57,30 +57,32 @@ class PlaceScreen extends React.Component {
         console.log(originalItems);
         var addItem = true;
 
-        // for(var i = 0; i<filterNames.length; i++)
-        // {
-        //     for(var k = 0; k<originalItems.length; k++)
-        //     {
-        //         //if the filter type is a boolean
-        //         if(currentFilters[filterNames[i]] === true || currentFilters[filterNames[i]] === false)
-        //         {
-        //             if(currentFilters[filterNames[i]] === originalItems[k][filterNames[i]])
-        //             {
-        //                 newItemList.push(originalItems[k]);
-        //             }
-        //         }
-        //     }
+        const title = getProp('label', this.props);
 
-        // }
 
         for(var i = 0; i<originalItems.length; i++)
         {
-            for(var k = 0; k<filterNames.length; k++)
+            if(currentFilters.wifi)
             {
-                //if the current filter if a boolean
-                if(currentFilters[filterNames[i]] === true || currentFilters[filterNames[i]] === false)
+                if(!originalItems[i].wifi)
                 {
-                    if(currentFilters[filterNames[i]] !== originalItems[k][filterNames[i]])
+                    addItem = false;
+                }
+            }
+
+            if(currentFilters.accessibility)
+            {
+                if(!originalItems[i].accessibility)
+                {
+                    addItem = false;
+                }
+            }
+
+            if(title === 'Sights')
+            {
+                if(currentFilters.isIndoor)
+                {
+                    if(!originalItems[i].isIndoor)
                     {
                         addItem = false;
                     }
