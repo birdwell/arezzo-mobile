@@ -9,14 +9,30 @@ class BaseFilter extends Component {
     {
         let numberOfSigns = Math.round((numSigns));
 
-        let stringSigns = "";
-
-        for(var i = 0; i<numberOfSigns; i++)
+        if(numberOfSigns === 0)
         {
-            stringSigns.concat("$");
+            return '';
         }
-
-        return stringSigns;
+        else if(numberOfSigns === 1)
+        {
+            return '$';
+        }
+        else if(numberOfSigns === 2)
+        {
+            return '$$';
+        }
+        else if(numberOfSigns === 3)
+        {
+            return '$$$';
+        }
+        else if(numberOfSigns === 4)
+        {
+            return '$$$$';
+        }
+        else if(numberOfSigns === 5)
+        {
+            return '$$$$$';
+        }
     }
 
     render() {
@@ -32,13 +48,13 @@ class BaseFilter extends Component {
                 <Text>Proximity: {Math.round(currentFilters.location)} km</Text>
                 <Slider maximumValue={10} minimumValue={0} value={currentFilters.location} onValueChange={(value) => onFilterChange('location', value)}/>
 
-                <Text>Price: {Math.round(currentFilters.price)}</Text>
+                <Text>Price: {this.roundToDollarSigns(currentFilters.price)}</Text>
                 <Slider maximumValue={5} minimumValue={0} value={currentFilters.price} onValueChange={(value) => onFilterChange('price', value)}/>
 
                 <Text>Suggested Age: {Math.round(currentFilters.suggestedAge)}+</Text>
                 <Slider maximumValue={18} minimumValue={0} value={currentFilters.suggestedAge} onValueChange={(value) => onFilterChange('suggestedAge', value)}/>
 
-                <TypeSpecificFilter label={label} />
+                <TypeSpecificFilter label={label} currentFilters={currentFilters} onFilterChange={onFilterChange}/>
             </View>
         );
     }

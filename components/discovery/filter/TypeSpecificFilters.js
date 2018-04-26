@@ -4,25 +4,51 @@ import {CheckBox, Slider} from 'react-native-elements';
 
 class TypeSpecificFilter extends Component {
 
+    getTimeSlotLabel(value)
+    {
+        value = Math.round(value);
+
+        if(value === 0)
+        {
+            return 'All Day';
+        }
+        else if(value === 1)
+        {
+            return 'Morning';
+        }
+        else if(value === 2)
+        {
+            return 'Afternoon';
+        }
+        else if(value === 3)
+        {
+            return 'Evening';
+        }
+    }
+    
 
     render()
     {
-        const {label} = this.props;
+
+        const {label, currentFilters, onFilterChange} = this.props;
 
         if(label === 'Sights')
         {
+            //filter by isIndoor
             return(
                 <View>
-                    <Text>In sights</Text>
+                    <CheckBox title="Indoor" checked={currentFilters.isIndoor} onPress={() => onFilterChange('isIndoor', !currentFilters.isIndoor)}/>
                 </View>
             );
 
         }
         else if(label === 'Events')
         {
+            //date
             return(
                 <View>
-                    <Text>In events</Text>
+                    <Text>Time: {this.getTimeSlotLabel(currentFilters.timeSlot)}</Text>
+                    <Slider maximumValue={3} minimumValue={0} value={currentFilters.timeSlot} onValueChange={(value) => onFilterChange('timeSlot', value)}/>   
                 </View>
             );
 

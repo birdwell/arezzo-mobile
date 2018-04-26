@@ -4,6 +4,14 @@ import { withNavigation } from 'react-navigation';
 import Discovery from '../components/discovery/View';
 import { getProp } from '../utils';
 
+/*
+For timeSlot:
+0=all day
+1=morning
+2=afternoon
+3=evening
+*/
+
 
 class PlaceScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
@@ -20,7 +28,10 @@ class PlaceScreen extends React.Component {
 			accessibility: false,
 			location: 0,
 			price: 0,
-			suggestedAge: 0
+            suggestedAge: 0,
+            timeSlot: 0,
+            isIndoor: false
+
 		}
     };
 
@@ -43,23 +54,49 @@ class PlaceScreen extends React.Component {
         
         let filterNames = Object.keys(currentFilters);
 
-        for(var i = 0; i<filterNames.length; i++)
+        console.log(originalItems);
+        var addItem = true;
+
+        // for(var i = 0; i<filterNames.length; i++)
+        // {
+        //     for(var k = 0; k<originalItems.length; k++)
+        //     {
+        //         //if the filter type is a boolean
+        //         if(currentFilters[filterNames[i]] === true || currentFilters[filterNames[i]] === false)
+        //         {
+        //             if(currentFilters[filterNames[i]] === originalItems[k][filterNames[i]])
+        //             {
+        //                 newItemList.push(originalItems[k]);
+        //             }
+        //         }
+        //     }
+
+        // }
+
+        for(var i = 0; i<originalItems.length; i++)
         {
-            for(var k = 0; k<originalItems.length; k++)
+            for(var k = 0; k<filterNames.length; k++)
             {
-                //if the filter type is a boolean
+                //if the current filter if a boolean
                 if(currentFilters[filterNames[i]] === true || currentFilters[filterNames[i]] === false)
                 {
-                    if(currentFilters[filterNames[i]] === originalItems[k][filterNames[i]])
+                    if(currentFilters[filterNames[i]] !== originalItems[k][filterNames[i]])
                     {
-                        newItemList.push(originalItems[k]);
+                        addItem = false;
                     }
                 }
             }
 
+            if(addItem)
+            {
+                newItemList.push(originalItems[i]);
+            }
+
+            addItem = true;
         }
 
         console.log(newItemList);
+        console.log("Finished applying filters");
 
 		this.setState({items: newItemList});
 
