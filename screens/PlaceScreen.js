@@ -28,7 +28,6 @@ class PlaceScreen extends React.Component {
 			accessibility: false,
 			location: 0,
 			price: 0,
-            suggestedAge: 0,
             timeSlot: 0,
             isIndoor: false
 
@@ -86,6 +85,57 @@ class PlaceScreen extends React.Component {
                     {
                         addItem = false;
                     }
+                }
+            }
+
+            if(title === 'Events')
+            {
+                if(currentFilters.timeSlot !== 0)
+                {
+                    var startDate = new Date(originalItems[i].startDate);
+                    var endDate = new Date(originalItems[i].endDate);
+
+                    var startHour = startDate.getHours();
+                    var endHours = endDate.getHours();
+                    var hoursBetween = Math.abs(startDate-endDate) / 360000;
+
+                    if(hoursBetween < 24)
+                    {
+                        if(currentFilters.timeSlot === 1)
+                        {
+                            if(startHours >= 6 && startHours <12 && endHours >=6 && endHours <12)
+                            {
+                                //do nothing
+                            }
+                            else
+                            {
+                                addItem = false;
+                            }
+                        }
+                        else if(currentFilters.timeSlot === 2)
+                        {
+                            if(startHours >= 12 && startHours <18  && endHours >=12 && endHours <18)
+                            {
+                                //do nothing
+                            }
+                            else
+                            {
+                                addItem = false;
+                            }
+                        }
+                        else if(currentFilters.timeSlot === 3)
+                        {
+                            if(startHours >= 18 && startHours <24 && endHours >=24 && endHours <18)
+                            {
+                                //do nothing
+                            }
+                            else
+                            {
+                                addItem = false;
+                            }
+                        }
+                    }
+
                 }
             }
 

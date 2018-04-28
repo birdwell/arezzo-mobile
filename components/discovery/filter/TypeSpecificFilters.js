@@ -10,7 +10,7 @@ class TypeSpecificFilter extends Component {
 
         if(value === 0)
         {
-            return 'All Day';
+            return 'Anytime';
         }
         else if(value === 1)
         {
