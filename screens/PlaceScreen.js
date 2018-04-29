@@ -95,17 +95,18 @@ class PlaceScreen extends React.Component {
                     var startDate = new Date(originalItems[i].startDate);
                     var endDate = new Date(originalItems[i].endDate);
 
+                    console.log(`${startDate.toTimeString()}   ${endDate.toTimeString()}`);
                     var startHours = startDate.getHours();
                     var endHours = endDate.getHours();
-                    var hoursBetween = Math.abs(startDate-endDate) / 360000;
+                    var hoursBetween = Math.abs(endHours-startHours);
 
                     console.log(`startHours: ${startHours}  endHours: ${endHours}  hoursBetween: ${hoursBetween}`);
 
                     if(hoursBetween < 24)
                     {
-                        if(currentFilters.timeSlot === 1)
+                        if(currentFilters.timeSlot === 1 )
                         {
-                            if(startHours >= 6 && startHours <12 && endHours >=6 && endHours <12)
+                            if(startHours >= 6 && startHours <12 && endHours >=6 && endHours <12 && hoursBetween > 0)
                             {
                                 //do nothing
                             }
@@ -114,9 +115,9 @@ class PlaceScreen extends React.Component {
                                 addItem = false;
                             }
                         }
-                        else if(currentFilters.timeSlot === 2)
+                        else if(currentFilters.timeSlot === 2 )
                         {
-                            if(startHours >= 12 && startHours <18  && endHours >=12 && endHours <18)
+                            if(startHours >= 12 && startHours <18  && endHours >=12 && endHours <18 && hoursBetween > 0)
                             {
                                 //do nothing
                             }
@@ -127,7 +128,7 @@ class PlaceScreen extends React.Component {
                         }
                         else if(currentFilters.timeSlot === 3)
                         {
-                            if(startHours >= 18 && startHours <24 && endHours >=24 && endHours <18)
+                            if(startHours >= 18 && startHours <24 && endHours >=18 && endHours <24 && hoursBetween > 0)
                             {
                                 //do nothing
                             }
