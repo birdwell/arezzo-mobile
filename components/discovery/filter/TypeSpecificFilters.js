@@ -48,7 +48,7 @@ class TypeSpecificFilter extends Component {
             return(
                 <View>
                     <Text>Time: {this.getTimeSlotLabel(currentFilters.timeSlot)}</Text>
-                    <Slider maximumValue={3} minimumValue={0} value={currentFilters.timeSlot} onValueChange={(value) => onFilterChange('timeSlot', value)}/>   
+                    <Slider maximumValue={3} minimumValue={0} value={Math.round(currentFilters.timeSlot)} onValueChange={(value) => onFilterChange('timeSlot', Math.round(value))}/>   
                 </View>
             );
 

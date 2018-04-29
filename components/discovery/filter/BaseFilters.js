@@ -49,7 +49,7 @@ class BaseFilter extends Component {
                 <Slider maximumValue={10} minimumValue={0} value={currentFilters.location} onValueChange={(value) => onFilterChange('location', value)}/>
 
                 <Text>Price: {this.roundToDollarSigns(currentFilters.price)}</Text>
-                <Slider maximumValue={5} minimumValue={0} value={currentFilters.price} onValueChange={(value) => onFilterChange('price', value)}/>
+                <Slider maximumValue={5} minimumValue={0} value={Math.round(currentFilters.price)} onValueChange={(value) => onFilterChange('price', Math.round(value))}/>
 
                 <TypeSpecificFilter label={label} currentFilters={currentFilters} onFilterChange={onFilterChange}/>
             </View>

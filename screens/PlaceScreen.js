@@ -95,9 +95,11 @@ class PlaceScreen extends React.Component {
                     var startDate = new Date(originalItems[i].startDate);
                     var endDate = new Date(originalItems[i].endDate);
 
-                    var startHour = startDate.getHours();
+                    var startHours = startDate.getHours();
                     var endHours = endDate.getHours();
                     var hoursBetween = Math.abs(startDate-endDate) / 360000;
+
+                    console.log(`startHours: ${startHours}  endHours: ${endHours}  hoursBetween: ${hoursBetween}`);
 
                     if(hoursBetween < 24)
                     {
@@ -135,8 +137,36 @@ class PlaceScreen extends React.Component {
                             }
                         }
                     }
-
                 }
+            }
+
+            if(currentFilters.price !== 0)
+            {
+                if(currentFilters.price === 5)
+                {
+                    if(originalItems[i].price < 5*5)
+                    {
+                        addItem = false;
+                    }
+                }
+                else
+                {
+                    let upperbound = (currentFilters.price+1) * 5;
+                    let lowerbound = (currentFilters.price-1) * 5;
+
+                    if(originalItems[i].price <= upperbound && originalItems[i].price > lowerbound)
+                    {
+                        
+                    }
+                    else{
+                        addItem = false;
+                    }
+                }
+            }
+
+            if(currentFilters.location !== 0)
+            {
+                
             }
 
             if(addItem)
